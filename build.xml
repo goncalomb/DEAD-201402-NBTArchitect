@@ -1,0 +1,53 @@
+<project name="NBTArchitect" basedir="." default="build">
+
+	<condition property="ant.ok">
+		<antversion atleast="1.8.2"/>
+	</condition>
+	<fail message="Ant 1.8.2+ is required." unless="ant.ok"/>
+
+	<property name="www.dir" location="www"/>
+	<property name="builder.dir" location="builder"/>
+	<property name="build.dir" location="build"/>
+	<property name="build.www.dir" location="${build.dir}/www"/>
+
+	<property name="version" value="0.0"/>
+	<filter token="VERSION" value="${version}"/>
+
+	<scriptdef name="jsmerge" language="javascript" src="${builder.dir}/jsmerge.js">
+		<attribute name="dir"/>
+		<attribute name="destfile"/>
+	</scriptdef>
+
+	<taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask" classpath="${builder.dir}/compiler-20131014.jar"/>
+
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="build" depends="clean">
+		<!-- Copy www directory. -->
+		<copy todir="${build.www.dir}" filtering="true">
+			<fileset dir="${www.dir}"/>
+		</copy>
+
+		<!-- Create main.js. -->
+		<jsmerge dir="${build.www.dir}/main.js" destfile="${build.dir}/main-${version}.js"/>
+		<delete dir="${build.www.dir}/main.js"/>
+
+		<!-- Minify main.js, creates main.min.js. -->
+		<jscomp compilationLevel="simple" warning="default" debug="false" output="${build.www.dir}/main-${version}.min.js">
+			<sources dir="${build.dir}">
+				<file name="main-${version}.js"/>
+			</sources>
+		</jscomp>
+
+		<!-- Versionize main.css. -->
+		<move file="${build.www.dir}/main.css" tofile="${build.www.dir}/main-${version}.css"/>
+
+		<!-- Create artifact. -->
+		<zip destfile="${build.dir}/${ant.project.name}-${version}.zip">
+			<zipfileset dir="${build.www.dir}" prefix="www"/>
+		</zip>
+	</target>
+
+</project>

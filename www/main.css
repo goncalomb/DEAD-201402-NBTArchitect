@@ -1,0 +1,103 @@
+/*
+ NBT Architect v@VERSION@
+ Copyright (C) 2014 - Gonçalo Baltazar <http://goncalomb.com>
+ All rights reserved.
+*/
+
+body {
+	background-color: #f7f7f7;
+}
+
+header, footer {
+	text-align: center;
+}
+
+footer {
+	padding-top: 20px;
+}
+
+input.form-control, select.form-control {
+	width: auto;
+}
+
+#container {
+	margin: 0 auto;
+	width: 1000px;
+	height: 450px;
+	border: 1px solid #e2e2e2;
+	border-radius: 3px;
+	background-color: #ffffff;
+}
+
+#workspace {
+	display: inline-block;
+	vertical-align: top;
+	width: 750px;
+	padding: 10px 20px;
+}
+
+#side {
+	display: inline-block;
+	vertical-align: top;
+	width: 244px;
+	height: 450px;
+	border-left: 1px solid #e2e2e2;
+}
+
+#side-top {
+	padding: 5px 10px;
+	height: 80px;
+}
+
+#objects {
+	height: 370px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	border-top: 1px solid #e2e2e2;
+}
+
+.object {
+	height: 50px;
+	background-color: #f0f3f5;
+	border-bottom: 1px solid #e2e2e2;
+	cursor: pointer;
+}
+
+.object:hover {
+	background-color: #b8d7e6;
+}
+
+#export-string, #import-string {
+	resize: none;
+	font-size: 12px;
+	height: 100px;
+}
+
+.tt-hint {
+	height: 43px;
+	padding: 10px 15px;
+	color: #d0d0d0;
+}
+
+.tt-dropdown-menu {
+	margin-top: 5px;
+	padding: 5px 0;
+	background-color: #ffffff;
+	border: 1px solid #b5b5b5;
+	border-radius: 5px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+
+.tt-suggestion {
+	padding: 3px 20px;
+	line-height: 28px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+	color: #ffffff;
+	background-color: #0097cf;
+}
+
+.tt-suggestion p {
+	margin: 0;
+}
