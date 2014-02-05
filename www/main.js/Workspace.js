@@ -8,6 +8,7 @@ Workspace.unserialize = function(data) {
 		var workspace = JSON.parse(Base64.decode(data));
 		this.OBJECTS = [];
 		$objects = $("#objects");
+		$objects.empty();
 		for (var i = 0, l = workspace.o.length; i < l; ++i) {
 			var obj = MCObject.decode(workspace.o[i], workspace.v);
 			this.OBJECTS.push(obj);
@@ -39,7 +40,7 @@ Workspace.serialize = function() {
 	return null;
 }
 
-Workspace.load = function(data) {
+Workspace.load = function() {
 	var data = localStorage.getItem("Workspace");
 	if (data && this.unserialize(data)) {
 		this.setDirty(false);
