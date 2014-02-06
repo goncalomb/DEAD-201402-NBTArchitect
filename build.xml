@@ -25,9 +25,12 @@
 	</target>
 
 	<target name="build" depends="clean">
-		<!-- Copy www directory. -->
+		<!-- Copy www directory. Don't filter .png files. -->
 		<copy todir="${build.www.dir}" filtering="true">
-			<fileset dir="${www.dir}"/>
+			<fileset dir="${www.dir}" excludes="**/*.png"/>
+		</copy>
+		<copy todir="${build.www.dir}">
+			<fileset dir="${www.dir}" includes="**/*.png"/>
 		</copy>
 
 		<!-- Create main.js. -->

@@ -67,6 +67,24 @@ input.form-control, select.form-control {
 	background-color: #b8d7e6;
 }
 
+.object div {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.object-icon {
+	width: 34px !important;
+	height: 34px !important;
+	margin: 7px;
+	border: 1px solid #e2e2e2;
+	border-radius: 2px;
+	background-color: #ffffff;
+}
+
+.object-info {
+	width: 170px;
+}
+
 #export-string, #import-string {
 	resize: none;
 	font-size: 12px;

@@ -1,4 +1,7 @@
-var MCObject = function() { }
+var MCObject = function() {
+	this.$div = $(document.createElement("div"));
+	this.$div.addClass("object");
+}
 
 MCObject.decode = function(data, version) {
 	switch (data.t) {
@@ -13,6 +16,10 @@ MCObject.prototype.getName = function(data) {
 	return "[MCObject]";
 }
 
+MCObject.prototype.getIconClass = function(data) {
+	return "object-icon mc-icon-void";
+}
+
 MCObject.prototype.encode = function(data) {
 	if (this instanceof MCItem) {
 		data.t = "i";
@@ -23,9 +30,14 @@ MCObject.prototype.decode = function(data, version) {
 	// To be overridden.
 }
 
-MCObject.prototype.createDiv = function() {
-	var $div = $(document.createElement('div'));
-	$div.addClass("object");
-	$div.html(this.getName());
-	return $div;
+MCObject.prototype.updateDiv = function() {
+	this.$div.empty();
+	$icon = $(document.createElement("div"));
+	$icon.addClass(this.getIconClass());
+	this.$div.append($icon);
+	$div_info = $(document.createElement("div"));
+	$div_info.addClass("object-info");
+	$div_info.text(this.getName());
+	this.$div.append($div_info);
+	return this.$div;
 }

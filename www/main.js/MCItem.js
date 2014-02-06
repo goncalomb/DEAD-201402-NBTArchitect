@@ -1,4 +1,5 @@
 var MCItem = function(id) {
+	MCObject.call(this);
 	this.id = (isDefined(id) ? id : 0);
 	this.damage = 0;
 	this.name = null;
@@ -16,6 +17,10 @@ MCItem.decode = function(data, version) {
 
 MCItem.prototype.getName = function(data) {
 	return MC_ITEM_NAMES[this.id];
+}
+
+MCObject.prototype.getIconClass = function(data) {
+	return "object-icon mc-icon-" + this.id + "-" + this.damage;
 }
 
 MCItem.prototype.encode = function(data) {

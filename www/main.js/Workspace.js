@@ -12,7 +12,7 @@ Workspace.unserialize = function(data) {
 		for (var i = 0, l = workspace.o.length; i < l; ++i) {
 			var obj = MCObject.decode(workspace.o[i], workspace.v);
 			this.OBJECTS.push(obj);
-			$objects.append(obj.createDiv());
+			$objects.append(obj.updateDiv());
 		}
 		return true;
 	} catch (e) {
@@ -63,7 +63,7 @@ Workspace.save = function(force) {
 
 Workspace.addObject = function(object) {
 	this.OBJECTS.push(object);
-	$("#objects").append(object.createDiv());
+	$("#objects").append(object.updateDiv());
 	this.save(true);
 }
 
