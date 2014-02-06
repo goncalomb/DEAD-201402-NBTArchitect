@@ -10,9 +10,12 @@
 	<property name="build.dir" location="build"/>
 	<property name="build.www.dir" location="${build.dir}/www"/>
 
-	<property name="version" value="0.0"/>
-	<filter token="VERSION" value="${version}"/>
+	<property file="project.properties"/>
 
+	<scriptdef name="gitdescribe" language="javascript" src="${builder.dir}/gitdescribe.js">
+		<attribute name="property"/>
+		<attribute name="alternative"/>
+	</scriptdef>
 	<scriptdef name="jsmerge" language="javascript" src="${builder.dir}/jsmerge.js">
 		<attribute name="dir"/>
 		<attribute name="destfile"/>
@@ -24,7 +27,13 @@
 		<delete dir="${build.dir}"/>
 	</target>
 
-	<target name="build" depends="clean">
+	<target name="version" depends="clean">
+		<gitdescribe property="version" alternative="${version.alternative}"/>
+	</target>
+
+	<target name="build" depends="version">
+		<filter token="VERSION" value="${version}"/>
+
 		<!-- Copy www directory. Don't filter .png files. -->
 		<copy todir="${build.www.dir}" filtering="true">
 			<fileset dir="${www.dir}" excludes="**/*.png"/>
