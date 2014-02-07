@@ -83,7 +83,8 @@ Workspace.removeObject = function(object) {
 Workspace.clear = function(object) {
 	this.OBJECTS = [];
 	$("#objects").empty();
-	this.save();
+	this.save(true);
+	this.setDirty(false);
 }
 
 Workspace.setDirty = function(value) {
