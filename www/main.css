@@ -20,6 +20,11 @@ input.form-control, select.form-control {
 	width: auto;
 }
 
+textarea.form-control {
+	resize: none;
+	height: 100px;
+}
+
 #container {
 	margin: 0 auto;
 	width: 1000px;
@@ -99,9 +104,7 @@ input.form-control, select.form-control {
 }
 
 #export-string, #import-string {
-	resize: none;
 	font-size: 12px;
-	height: 100px;
 }
 
 .tt-hint {

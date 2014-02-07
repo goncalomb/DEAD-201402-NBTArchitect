@@ -5,6 +5,10 @@ var MCItem = function(id) {
 	this.name = null;
 	this.lore = [];
 	this.enchantments = [];
+	var self = this;
+	this.$div.click(function() {
+		PanelEditItem.open(self);
+	});
 }
 
 inherit(MCObject, MCItem);

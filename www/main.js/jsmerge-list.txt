@@ -15,6 +15,7 @@ PanelHome.js
 PanelOptions.js
 PanelExportImport.js
 PanelNewItem.js
+PanelEditItem.js
 
 MCObject.js
 MCItem.js

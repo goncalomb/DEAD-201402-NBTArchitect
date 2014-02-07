@@ -9,6 +9,7 @@ if (typeof Storage === "undefined" || typeof JSON === "undefined") {
 		// Workspace.
 		Workspace.load();
 		$("#btn-save").click(function() {
+			Panel.currentPanel.save();
 			Workspace.save();
 		});
 		$(window).on("beforeunload", function() {

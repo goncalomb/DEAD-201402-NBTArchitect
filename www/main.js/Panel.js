@@ -33,7 +33,7 @@ Panel.prototype.open = function() {
 	if (Workspace.dirtyConfirm()) {
 		this.constructor.$panels.addClass("hidden");
 		this.$element.removeClass("hidden");
-		this.constructor._currentPanel = this;
+		this.constructor.currentPanel = this;
 		if (this.resetForm) {
 			$form = $("form", this.$element);
 			$('.tt-query', $form).typeahead("setQuery", "");

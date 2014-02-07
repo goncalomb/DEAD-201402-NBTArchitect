@@ -56,12 +56,18 @@ MCObject.prototype.updateDiv = function() {
 	$div_controls.addClass("object-controls btn-group btn-xs");
 
 	var self = this;
-	this.createControlBtn($div_controls, "Clone", "fa-files-o", function() {
+	this.createControlBtn($div_controls, "Clone", "fa-files-o", function(e) {
+		e.stopPropagation();
 		Workspace.addObject(self.clone());
 	});
-	this.createControlBtn($div_controls, "Delete", "fa-trash-o", function() {
+	this.createControlBtn($div_controls, "Delete", "fa-trash-o", function(e) {
+		e.stopPropagation();
 		if (confirm("This will remove the object permanently.")) {
 			Workspace.removeObject(self);
+			if (PanelEditItem.item == self) {
+				Workspace.setDirty(false);
+				PanelHome.open();
+			}
 		}
 	});
 

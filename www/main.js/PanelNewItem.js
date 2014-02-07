@@ -22,8 +22,9 @@ PanelNewItem.initialize = function() {
 			self.error("Invalid item type!");
 		}
 		if (id != 0) {
-			Workspace.addObject(new MCItem(id));
-			PanelHome.open();
+			var item = new MCItem(id);
+			Workspace.addObject(item);
+			PanelEditItem.open(item);
 		}
 	});
 
