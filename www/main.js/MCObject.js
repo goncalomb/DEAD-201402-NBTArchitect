@@ -30,23 +30,41 @@ MCObject.prototype.decode = function(data, version) {
 	// To be overridden.
 }
 
+MCObject.prototype.clone = function(data, version) {
+	// The easiest way to do a deep clone is to encode and then decode.
+	var data = {};
+	this.encode(data);
+	return MCObject.decode(data);
+}
+
+MCObject.prototype.createControlBtn = function($parent, title, icon, click) {
+	$btn = $(document.createElement("button"));
+	$btn.attr({
+		"type": "button",
+		"title": title
+	});
+	$btn.addClass("btn btn-primary btn-xs");
+	$btn.html("<i class=\"fa " + icon + "\"></i>");
+	$btn.click(click);
+	$parent.append($btn);
+}
+
 MCObject.prototype.updateDiv = function() {
 	this.$div.empty();
 
 	$div_controls = $(document.createElement("div"));
-	$div_controls.addClass("object-controls");
+	$div_controls.addClass("object-controls btn-group btn-xs");
 
-	$btn_delete = $(document.createElement("button"));
-	$btn_delete.attr("type", "button")
-	$btn_delete.addClass("btn btn-primary btn-xs");
-	$btn_delete.html("<i class=\"fa fa-trash-o\"></i>");
 	var self = this;
-	$btn_delete.click(function() {
+	this.createControlBtn($div_controls, "Clone", "fa-files-o", function() {
+		Workspace.addObject(self.clone());
+	});
+	this.createControlBtn($div_controls, "Delete", "fa-trash-o", function() {
 		if (confirm("This will remove the object permanently.")) {
 			Workspace.removeObject(self);
 		}
 	});
-	$div_controls.append($btn_delete);
+
 	this.$div.append($div_controls);
 
 	$icon = $(document.createElement("div"));
