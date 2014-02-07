@@ -14,6 +14,7 @@ PanelExportImport.initialize = function() {
 }
 
 PanelExportImport.open = function() {
-	Panel.prototype.open.call(this);
-	$("#export-string").val(Workspace.serialize());
+	if (Panel.prototype.open.call(this)) {
+		$("#export-string").val(Workspace.serialize());
+	}
 }

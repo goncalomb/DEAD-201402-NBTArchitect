@@ -43,7 +43,9 @@ Panel.prototype.open = function() {
 			});
 		}
 		this.error('');
+		return true;
 	}
+	return false;
 }
 
 Panel.prototype.error = function (error) {
