@@ -19,8 +19,15 @@ MCItem.decode = function(data, version) {
 	return o;
 }
 
-MCItem.prototype.getName = function(data) {
+MCItem.prototype.getTypeName = function(data) {
 	return MC_ITEM_NAMES[this.id];
+}
+
+MCItem.prototype.getName = function(data) {
+	if (!isEmpty(this.name)) {
+		return this.name;
+	}
+	return this.getTypeName();
 }
 
 MCObject.prototype.getIconClass = function(data) {

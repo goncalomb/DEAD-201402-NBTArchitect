@@ -63,7 +63,7 @@ PanelEditItem.open = function(item) {
 		this.item = item;
 
 		this.$div_icon.attr("class", "pull-right " + item.getIconClass());
-		this.$div_name.text(item.getName());
+		this.$div_name.text(item.getTypeName());
 
 		this.$input_name.val(item.name);
 		this.$input_lore.val(item.lore.join("\n"));
@@ -73,4 +73,5 @@ PanelEditItem.open = function(item) {
 PanelEditItem.save = function() {
 	this.item.name = this.$input_name.val();
 	this.item.lore = this.$input_lore.val().split("\n");
+	this.item.updateDiv();
 }
