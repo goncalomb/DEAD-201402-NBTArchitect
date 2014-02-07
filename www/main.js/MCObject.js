@@ -32,9 +32,27 @@ MCObject.prototype.decode = function(data, version) {
 
 MCObject.prototype.updateDiv = function() {
 	this.$div.empty();
+
+	$div_controls = $(document.createElement("div"));
+	$div_controls.addClass("object-controls");
+
+	$btn_delete = $(document.createElement("button"));
+	$btn_delete.attr("type", "button")
+	$btn_delete.addClass("btn btn-primary btn-xs");
+	$btn_delete.html("<i class=\"fa fa-trash-o\"></i>");
+	var self = this;
+	$btn_delete.click(function() {
+		if (confirm("This will remove the object permanently.")) {
+			Workspace.removeObject(self);
+		}
+	});
+	$div_controls.append($btn_delete);
+	this.$div.append($div_controls);
+
 	$icon = $(document.createElement("div"));
 	$icon.addClass(this.getIconClass());
 	this.$div.append($icon);
+
 	$div_info = $(document.createElement("div"));
 	$div_info.addClass("object-info");
 	$div_info.text(this.getName());

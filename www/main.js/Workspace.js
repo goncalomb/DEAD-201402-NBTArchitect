@@ -56,7 +56,9 @@ Workspace.save = function(force) {
 		if (data) {
 			localStorage.setItem("Workspace", data);
 			console.log("Worksapce saved, " + this.OBJECTS.length + " objects.");
-			this.setDirty(false);
+			if (!force) {
+				this.setDirty(false);
+			}
 		}
 	}
 }
@@ -65,6 +67,17 @@ Workspace.addObject = function(object) {
 	this.OBJECTS.push(object);
 	$("#objects").append(object.updateDiv());
 	this.save(true);
+}
+
+Workspace.removeObject = function(object) {
+	for (var i = 0, l = this.OBJECTS.length; i < l; ++i) {
+		if (this.OBJECTS[i] == object) {
+			this.OBJECTS.splice(i, 1);
+			$("#objects .object:nth-child(" + (i + 1) + ")").remove();
+			this.save(true);
+			return;
+		}
+	}
 }
 
 Workspace.setDirty = function(value) {

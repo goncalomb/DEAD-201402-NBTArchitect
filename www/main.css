@@ -61,13 +61,14 @@ input.form-control, select.form-control {
 	background-color: #f0f3f5;
 	border-bottom: 1px solid #e2e2e2;
 	cursor: pointer;
+	position: relative;
 }
 
 .object:hover {
 	background-color: #b8d7e6;
 }
 
-.object div {
+.object-icon, .object-info {
 	display: inline-block;
 	vertical-align: top;
 }
@@ -83,6 +84,18 @@ input.form-control, select.form-control {
 
 .object-info {
 	width: 170px;
+}
+
+.object-controls {
+	position: absolute;
+	display: none;
+	font-size: 13px;
+	top: 5px;
+	right: 5px;
+}
+
+.object:hover .object-controls {
+	display: block;
 }
 
 #export-string, #import-string {
