@@ -11,18 +11,18 @@ PanelNewItem.initialize = function() {
 	$form_new_item.submit(function(e) {
 		e.preventDefault();
 		var value = $new_item_id.val();
-		var id = 0;
-		if (isDefined(MC_ITEM_NAMES[value])) {
-			id = parseInt(value);
-		} else if (isDefined(MC_ITEM_NAMES_REVERSE[value])) {
-			id = MC_ITEM_NAMES_REVERSE[value];
-		} else if (isDefined(MC_ITEM_NAMES_REVERSE["minecraft:" + value])) {
-			id = MC_ITEM_NAMES_REVERSE["minecraft:" + value];
+		var material = null;
+		if (isDefined(Material.BY_ID[value])) {
+			material = Material.BY_ID[value];
+		} else if (isDefined(Material.BY_NAME[value])) {
+			material = Material.BY_NAME[value];
+		} else if (isDefined(Material.BY_NAME["minecraft:" + value])) {
+			material = Material.BY_NAME["minecraft:" + value];
 		} else {
 			self.error("Invalid item type!");
 		}
-		if (id != 0) {
-			var item = new MCItem(id);
+		if (material) {
+			var item = new MCItem(material);
 			Workspace.addObject(item);
 			PanelEditItem.open(item);
 		}
@@ -30,6 +30,6 @@ PanelNewItem.initialize = function() {
 
 	$new_item_id.typeahead({
 		name: "Items",
-		local: MC_ITEM_NAMES_DATUMS
+		local: Material.DATUMS
 	});
 }

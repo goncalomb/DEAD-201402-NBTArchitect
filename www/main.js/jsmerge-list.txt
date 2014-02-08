@@ -1,12 +1,12 @@
 # This file lists all scripts on this folder.
 # The jsmerge Ant task will merge these files using this order.
 
-MC_ITEM_NAMES.js
-
 header.js
 Base64.js
 UtilsJQuery.js
 UtilsMc.js
+
+Material.js
 
 Workspace.js
 

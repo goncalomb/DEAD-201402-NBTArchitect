@@ -1,6 +1,6 @@
-var MCItem = function(id) {
+var MCItem = function(material) {
 	MCObject.call(this);
-	this.id = (isDefined(id) ? id : 0);
+	this.material = material;
 	this.damage = 0;
 	this.name = null;
 	this.lore = [];
@@ -20,7 +20,7 @@ MCItem.decode = function(data, version) {
 }
 
 MCItem.prototype.getTypeName = function(data) {
-	return MC_ITEM_NAMES[this.id];
+	return this.material.name;
 }
 
 MCItem.prototype.getName = function(data) {
@@ -31,12 +31,12 @@ MCItem.prototype.getName = function(data) {
 }
 
 MCObject.prototype.getIconClass = function(data) {
-	return "object-icon mc-icon-" + this.id + "-" + this.damage;
+	return "object-icon mc-icon-" + this.material.id + "-" + this.damage;
 }
 
 MCItem.prototype.encode = function(data) {
 	MCObject.prototype.encode.call(this, data);
-	data.i = this.id;
+	data.i = this.material.id;
 	data.d = this.damage;
 	if (!isEmpty(this.name)) {
 		data.n = this.name;
@@ -47,7 +47,7 @@ MCItem.prototype.encode = function(data) {
 }
 
 MCItem.prototype.decode = function(data, version) {
-	this.id = data.i;
+	this.material = Material.BY_ID[data.i];
 	this.damage = data.d;
 	if (isDefined(data.n)) {
 		this.name = data.n;
