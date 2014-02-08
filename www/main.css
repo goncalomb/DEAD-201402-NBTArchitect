@@ -36,9 +36,23 @@ textarea.form-control {
 
 #workspace {
 	display: inline-block;
+	position: relative;
 	vertical-align: top;
 	width: 750px;
 	padding: 10px 20px;
+}
+
+.main-controls {
+	text-align: right;
+	width: 400px;
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	z-index: 1;
+}
+
+.main-controls .btn-group {
+	margin: 5px 0;
 }
 
 #side {

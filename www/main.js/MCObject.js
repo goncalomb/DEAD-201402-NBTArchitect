@@ -79,7 +79,7 @@ MCObject.prototype.updateDiv = function() {
 
 	$div_info = $(document.createElement("div"));
 	$div_info.addClass("object-info");
-	$div_info.text(this.getName());
+	$div_info.html(UtilsMc.parseColors(this.getName()));
 	this.$div.append($div_info);
 	return this.$div;
 }
