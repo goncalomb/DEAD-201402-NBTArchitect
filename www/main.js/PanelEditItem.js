@@ -21,15 +21,18 @@ PanelEditItem.createInput = function(parent, type, placeholder) {
 				"class": "form-control",
 				id: id,
 				placeholder: placeholder,
-				creation: function() { input = this; }
+				creation: function() { $input = $(this); }
 			}]
 		}]
 	}]);
-	return $(input);
+	if (type != "textarea") {
+		$input.attr("type", type);
+	}
+	return $input;
 }
 
 PanelEditItem.initialize = function(){
-	this.$form = $("#panel-edit-item form");
+	this.$form = $("#panel-edit-item .form-horizontal");
 
 	var self = this;
 	$.newDomChunk(this.$form, [{

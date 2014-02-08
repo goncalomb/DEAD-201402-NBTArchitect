@@ -24,6 +24,7 @@ if (typeof Storage === "undefined" || typeof JSON === "undefined") {
 				$elem.val(val.substr(0, i) + "§" + val.substr(j));
 				$elem.focus();
 				$elem[0].selectionStart = $elem[0].selectionEnd = i + 1;
+				$elem.change();
 			}
 		});
 
