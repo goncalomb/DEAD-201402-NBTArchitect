@@ -120,6 +120,7 @@ PanelEditItem.open = function(item) {
 PanelEditItem.save = function() {
 	this.item.damage = this.damage;
 	this.item.name = this.$input_name.val();
-	this.item.lore = this.$input_lore.val().split("\n");
+	var lore = this.$input_lore.val();
+	this.item.lore = (lore == "" ? [] : lore.split("\n"));
 	this.item.updateDiv();
 }
