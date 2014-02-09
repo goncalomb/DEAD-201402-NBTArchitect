@@ -56,3 +56,17 @@ MCItem.prototype.decode = function(data, version) {
 		this.lore = data.l;
 	}
 }
+
+MCItem.prototype.getCommand = function() {
+	var data = {};
+	if (!isEmpty(this.name) || !isEmpty(this.lore)) {
+		data.display = {};
+	}
+	if (!isEmpty(this.name)) {
+		data.display.Name = this.name;
+	}
+	if (!isEmpty(this.lore)) {
+		data.display.Lore = this.lore;
+	}
+	return "/give goncalomb " + this.material.name + " 1 " + this.damage + " " + Mojangson.stringify(data);
+}

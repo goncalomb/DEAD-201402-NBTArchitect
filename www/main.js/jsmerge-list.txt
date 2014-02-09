@@ -5,6 +5,7 @@ header.js
 Base64.js
 UtilsJQuery.js
 UtilsMc.js
+Mojangson.js
 
 Material.js
 
@@ -16,6 +17,7 @@ PanelOptions.js
 PanelExportImport.js
 PanelNewItem.js
 PanelEditItem.js
+PanelCommands.js
 
 MCObject.js
 MCItem.js

@@ -121,7 +121,7 @@ textarea.form-control {
 	display: block;
 }
 
-#export-string, #import-string {
+#export-string, #import-string, #command {
 	font-size: 12px;
 }
 

@@ -30,6 +30,11 @@ MCObject.prototype.decode = function(data, version) {
 	// To be overridden.
 }
 
+MCObject.prototype.getCommand = function() {
+	// To be overridden.
+	return "** Nothing Here **";
+}
+
 MCObject.prototype.clone = function(data, version) {
 	// The easiest way to do a deep clone is to encode and then decode.
 	var data = {};
@@ -56,6 +61,10 @@ MCObject.prototype.updateDiv = function() {
 	$div_controls.addClass("object-controls btn-group btn-xs");
 
 	var self = this;
+	this.createControlBtn($div_controls, "Commands", "fa-terminal", function(e) {
+		e.stopPropagation();
+		PanelCommands.open(self);
+	});
 	this.createControlBtn($div_controls, "Clone", "fa-files-o", function(e) {
 		e.stopPropagation();
 		Workspace.addObject(self.clone());
