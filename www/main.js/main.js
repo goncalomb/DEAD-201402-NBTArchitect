@@ -16,7 +16,7 @@ if (typeof Storage === "undefined" || typeof JSON === "undefined") {
 		$btn_section_sign = $("#btn-section-sign");
 		$btn_section_sign.attr("title", "Inserts the section sign (§) on the current field.\nMost strings in Minecraft support it as a formatting character.")
 		$btn_section_sign.click(function() {
-			var $elem = $(lastFocus).filter("input[type=\"text\"], textarea").not(".tt-query, [disabled], [readonly]");
+			var $elem = $(lastFocus).filter("input[type=\"text\"]:visible, textarea:visible").not(".tt-query, [disabled], [readonly]");
 			if ($elem.length > 0) {
 				var i = $elem[0].selectionStart;
 				var j = $elem[0].selectionEnd;

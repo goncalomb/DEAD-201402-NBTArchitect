@@ -39,6 +39,7 @@ PanelEditItem.createVariantButton = function(parent, material, damage) {
 		$this.siblings().removeClass("active");
 		$this.addClass("active");
 		self.damage = damage;
+		self.$div_icon.attr("class", "pull-right object-icon mc-icon-" + material.id + "-" + damage);
 		Workspace.setDirty(true);
 	})
 	if (this.damage == damage) {
