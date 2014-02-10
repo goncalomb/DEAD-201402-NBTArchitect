@@ -9,4 +9,12 @@ PanelOptions.initialize = function() {
 			PanelHome.open();
 		}
 	});
+
+	$("#btn-reset-workspace").click(function() {
+		if (confirm("This will remove ALL data stored on your browser, including your objects, permanently.")) {
+			Workspace.reset();
+			PanelHome.open();
+			window.location.reload();
+		}
+	});
 }

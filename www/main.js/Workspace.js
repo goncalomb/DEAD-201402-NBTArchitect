@@ -47,6 +47,7 @@ Workspace.load = function() {
 		console.log("Workspace loaded, " + this.OBJECTS.length + " objects.");
 	} else {
 		console.log("New Workspace.");
+		this.defaultObjects();
 	}
 }
 
@@ -85,6 +86,33 @@ Workspace.clear = function(object) {
 	$("#objects").empty();
 	this.save(true);
 	this.setDirty(false);
+}
+
+Workspace.reset = function() {
+	this.OBJECTS = [];
+	$("#objects").empty();
+	localStorage.removeItem("Workspace");
+	this.setDirty(false);
+}
+
+Workspace.defaultObjects = function() {
+	var obj;
+
+	obj = new MCItem(Material.BY_NAME["minecraft:fish"]);
+	obj.damage = 3;
+	obj.name = "§3Fishy Friend";
+	obj.lore = ["I smell something fishy."]
+	this.OBJECTS.push(obj);
+
+	obj = new MCItem(Material.BY_NAME["minecraft:dragon_egg"]);
+	obj.name = "§0§k---§0 Dark Egg §k---";
+	this.OBJECTS.push(obj);
+
+	// Add the default objects without saving.
+	$objects = $("#objects");
+	for (var i = 0, l = this.OBJECTS.length; i < l; ++i) {
+		$objects.append(this.OBJECTS[i].updateDiv());
+	}
 }
 
 Workspace.setDirty = function(value) {
