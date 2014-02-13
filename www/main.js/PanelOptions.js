@@ -3,6 +3,10 @@ var PanelOptions = new Panel("options");
 PanelOptions.initialize = function() {
 	this.addButton($("#btn-options"));
 
+	$("#options-username").on("change keydown", function() {
+		Workspace.setDirty(true);
+	});
+
 	$("#btn-clear-workspace").click(function() {
 		if (confirm("This will remove ALL the objects permanently.")) {
 			Workspace.clear();
@@ -17,4 +21,14 @@ PanelOptions.initialize = function() {
 			window.location.reload();
 		}
 	});
+}
+
+PanelOptions.open = function() {
+	if (Panel.prototype.open.call(this)) {
+		$("#options-username").val(Workspace.getOption("username", "@p"));
+	}
+}
+
+PanelOptions.save = function() {
+	Workspace.setOption("username", $("#options-username").val());
 }

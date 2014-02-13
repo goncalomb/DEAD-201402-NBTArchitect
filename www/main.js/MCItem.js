@@ -68,5 +68,5 @@ MCItem.prototype.getCommand = function() {
 	if (!isEmpty(this.lore)) {
 		data.display.Lore = this.lore;
 	}
-	return "/give goncalomb " + this.material.name + " 1 " + this.damage + " " + Mojangson.stringify(data);
+	return "/give " + Workspace.getOption("username", "@p") + " " + this.material.name + " 1 " + this.damage + " " + Mojangson.stringify(data);
 }

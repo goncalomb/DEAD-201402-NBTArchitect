@@ -1,5 +1,6 @@
 var Workspace = {
 	OBJECTS: [],
+	options: {},
 	isDirty: false
 }
 
@@ -41,6 +42,12 @@ Workspace.serialize = function() {
 }
 
 Workspace.load = function() {
+	// Load options.
+	var dataOp = localStorage.getItem("WorkspaceOptions");
+	try {
+		this.options = JSON.parse(Base64.decode(dataOp));
+	} catch (e) { }
+	// Load objects.
 	var data = localStorage.getItem("Workspace");
 	if (data && this.unserialize(data)) {
 		this.setDirty(false);
@@ -53,6 +60,12 @@ Workspace.load = function() {
 
 Workspace.save = function(force) {
 	if (this.isDirty || force) {
+		// Save options.
+		try {
+			var dataOp = Base64.encode(JSON.stringify(this.options))
+			localStorage.setItem("WorkspaceOptions", dataOp);
+		} catch (e) { }
+		// Save objects.
 		var data = this.serialize();
 		if (data) {
 			localStorage.setItem("Workspace", data);
@@ -81,6 +94,19 @@ Workspace.removeObject = function(object) {
 	}
 }
 
+Workspace.setOption = function(key, value) {
+	this.options[key] = value;
+}
+
+Workspace.getOption = function(key, def) {
+	if (isDefined(this.options[key])) {
+		return this.options[key];
+	} else if (def) {
+		return def;
+	}
+	return null;
+}
+
 Workspace.clear = function(object) {
 	this.OBJECTS = [];
 	$("#objects").empty();
@@ -92,6 +118,7 @@ Workspace.reset = function() {
 	this.OBJECTS = [];
 	$("#objects").empty();
 	localStorage.removeItem("Workspace");
+	localStorage.removeItem("WorkspaceOptions");
 	this.setDirty(false);
 }
 
