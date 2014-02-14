@@ -32,7 +32,6 @@ textarea.form-control {
 #container {
 	margin: 0 auto;
 	width: 1000px;
-	height: 450px;
 	border: 1px solid #e2e2e2;
 	border-radius: 3px;
 	background-color: #ffffff;
@@ -43,6 +42,7 @@ textarea.form-control {
 	position: relative;
 	vertical-align: top;
 	width: 750px;
+	min-height: 450px;
 	padding: 10px 20px;
 }
 
@@ -63,7 +63,6 @@ textarea.form-control {
 	display: inline-block;
 	vertical-align: top;
 	width: 244px;
-	height: 450px;
 	border-left: 1px solid #e2e2e2;
 }
 
@@ -73,7 +72,6 @@ textarea.form-control {
 }
 
 #objects {
-	height: 370px;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	border-top: 1px solid #e2e2e2;

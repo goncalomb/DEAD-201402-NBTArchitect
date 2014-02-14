@@ -43,5 +43,14 @@ if (typeof Storage === "undefined" || typeof JSON === "undefined") {
 		// Panels.
 		Panel.initializeAllPanels();
 		Panel.currentPanel = PanelHome;
+
+		// Fix sidebar size.
+		var updateSide = function() {
+			var size = $("#workspace").innerHeight() - $("#side-top").outerHeight();
+			$("#objects").css("height", size + "px");
+			console.log(size);
+			setTimeout(updateSide, 500);
+		}
+		updateSide();
 	});
 }
