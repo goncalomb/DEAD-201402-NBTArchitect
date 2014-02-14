@@ -2,7 +2,6 @@ var Panel = function(name, resetForm) {
 	this.name = name;
 	this.resetForm = (resetForm || false);
 	this.$element = null;
-	this.$errorElement = null;
 	this.constructor.PANELS.push(this);
 }
 
@@ -42,25 +41,9 @@ Panel.prototype.open = function() {
 				this.reset();
 			});
 		}
-		this.error('');
 		return true;
 	}
 	return false;
-}
-
-Panel.prototype.error = function (error) {
-	if (!this.$errorElement && error) {
-		$h3 = $(">h3:first-child", this.$element);
-		this.$errorElement = $(document.createElement("p")).addClass("text-danger");
-		this.$errorElement.insertAfter($h3);
-		var self = this;
-		$("input, select, textarea", this.$element).on("change keydown", function() {
-			self.$errorElement.text("");
-		});
-	}
-	if (this.$errorElement) {
-		this.$errorElement.text(error || "");
-	}
 }
 
 Panel.prototype.addButton = function($button) {

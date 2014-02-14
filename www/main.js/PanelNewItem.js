@@ -19,7 +19,7 @@ PanelNewItem.initialize = function() {
 		} else if (isDefined(Material.BY_NAME["minecraft:" + value])) {
 			material = Material.BY_NAME["minecraft:" + value];
 		} else {
-			self.error("Invalid item type!");
+			alert("Invalid item type!");
 		}
 		if (material) {
 			var item = new MCItem(material);
