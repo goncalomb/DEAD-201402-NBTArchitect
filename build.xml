@@ -34,12 +34,12 @@
 	<target name="build" depends="version">
 		<filter token="VERSION" value="${version}"/>
 
-		<!-- Copy www directory. Don't filter .png files. -->
+		<!-- Copy www directory. Don't filter .png and .ico files. -->
 		<copy todir="${build.www.dir}" filtering="true">
-			<fileset dir="${www.dir}" excludes="**/*.png"/>
+			<fileset dir="${www.dir}" excludes="**/*.png,**/*.ico"/>
 		</copy>
 		<copy todir="${build.www.dir}">
-			<fileset dir="${www.dir}" includes="**/*.png"/>
+			<fileset dir="${www.dir}" includes="**/*.png,**/*.ico"/>
 		</copy>
 
 		<!-- Create main.js. -->
