@@ -44,13 +44,26 @@ if (typeof Storage === "undefined" || typeof JSON === "undefined") {
 		Panel.initializeAllPanels();
 		Panel.currentPanel = PanelHome;
 
-		// Fix sidebar size.
+		// Updated sidebar size to fill the container.
 		var updateSide = function() {
 			var size = $("#workspace").innerHeight() - $("#side-top").outerHeight();
 			$("#objects").css("height", size + "px");
-			console.log(size);
-			setTimeout(updateSide, 500);
 		}
-		updateSide();
+		// A dirt check for DOMSubtreeModified support.
+		// I know it is deprecated, but who cares.
+		var supportsDOMSubtreeModified = false;
+		$(document.createElement('div')).on("DOMSubtreeModified", function() {
+			supportsDOMSubtreeModified = true;
+		}).append(document.createElement('div'));
+		// If DOMSubtreeModified supported, use it.
+		if (supportsDOMSubtreeModified) {
+			$("#workspace").on("DOMSubtreeModified", updateSide);
+		} else {
+			var updateSideLoop = function() {
+				updateSide();
+				setTimeout(updateSideLoop, 500);
+			}
+			updateSideLoop();
+		}
 	});
 }
