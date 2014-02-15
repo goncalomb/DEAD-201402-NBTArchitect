@@ -44,6 +44,9 @@ MCItem.prototype.encode = function(data) {
 	if (!isEmpty(this.lore)) {
 		data.l = this.lore;
 	}
+	if (!isEmpty(this.enchantments)) {
+		data.e = this.enchantments;
+	}
 }
 
 MCItem.prototype.decode = function(data, version) {
@@ -54,6 +57,9 @@ MCItem.prototype.decode = function(data, version) {
 	}
 	if (isDefined(data.l)) {
 		this.lore = data.l;
+	}
+	if (isDefined(data.e)) {
+		this.enchantments = data.e;
 	}
 }
 
@@ -67,6 +73,9 @@ MCItem.prototype.getCommand = function() {
 	}
 	if (!isEmpty(this.lore)) {
 		data.display.Lore = this.lore;
+	}
+	if (!isEmpty(this.enchantments)) {
+		data.ench = Enchantment.toNBT(this.enchantments);
 	}
 	return "/give " + Workspace.getOption("username", "@p") + " " + this.material.name + " 1 " + this.damage + " " + Mojangson.stringify(data);
 }

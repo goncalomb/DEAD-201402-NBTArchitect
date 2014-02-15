@@ -77,6 +77,36 @@ PanelEditItem.createInput = function(parent, type, placeholder) {
 	return $input;
 }
 
+PanelEditItem.updateEnchatmentList = function($div, list) {
+	$div.empty();
+	for (var i = 0, l = list.length; i < l; ++i) {
+		(function(i) {
+			var id = list[i][0];
+			var lvl = list[i][1];
+			$.newDomChunk($div, [{
+				tag: "p",
+				childs: [{
+					tag: "button",
+					type: "button",
+					title: "Remove",
+					"class": "btn btn-primary btn-xs",
+					creation: function() {
+						$(this).click(function() {
+							Enchantment.remove(list, id);
+							Workspace.setDirty(true);
+							$(this).parent().remove();
+						});
+					},
+					childs: [{
+						tag: "i",
+						"class": "fa fa-minus"
+					}]
+				}, " " + Enchantment.LIST[id] + " " + lvl]
+			}]);
+		})(i);
+	}
+}
+
 PanelEditItem.initialize = function(){
 	this.$form = $("#panel-edit-item .form-horizontal");
 
@@ -94,6 +124,50 @@ PanelEditItem.initialize = function(){
 	$("input, textarea", this.$form).on("change keydown", function() {
 		Workspace.setDirty(true);
 	});
+
+	this.enchantments = {};
+
+	var div_ench_outer = this.createRow(this.$form, "Enchantments");
+	div_ench_outer.addClass("form-inline");
+	var select_ench, input_ench_level;
+	$.newDomChunk(div_ench_outer, [{
+		tag: "div",
+		creation: function() { self.$div_ench = $(this); }
+	}, {
+		tag: "select",
+		"class": "form-control",
+		creation: function() {
+			for (var key in Enchantment.LIST) {
+				$.newElement("option", { value: key }, this).text(Enchantment.LIST[key]);
+			}
+			select_ench = $(this);
+		}
+	}, " ", {
+		tag: "input",
+		"class": "form-control",
+		"style": "width: 80px",
+		type: "text",
+		placeholder: "Level",
+		maxlength: "5",
+		creation: function() { input_ench_level = $(this); }
+	}, " ", {
+		tag: "button",
+		"class": "btn btn-default",
+		type: "button",
+		childs: ["Add"],
+		creation: function() {
+			$(this).click(function() {
+				var lvl = parseIntRange(input_ench_level.val(), 1, 32767);
+				if (lvl === null) {
+					alert("Invalid level (1 - 32767).");
+					return;
+				}
+				Enchantment.add(self.enchantments, parseInt(select_ench.val()), lvl);
+				self.updateEnchatmentList(self.$div_ench, self.enchantments);
+				Workspace.setDirty(true);
+			});
+		}
+	}]);
 }
 
 PanelEditItem.open = function(item) {
@@ -115,6 +189,9 @@ PanelEditItem.open = function(item) {
 
 		this.$input_name.val(item.name);
 		this.$input_lore.val(item.lore.join("\n"));
+
+		this.enchantments = Enchantment.clone(item.enchantments);
+		this.updateEnchatmentList(this.$div_ench, this.enchantments);
 	}
 }
 
@@ -123,5 +200,6 @@ PanelEditItem.save = function() {
 	this.item.name = this.$input_name.val();
 	var lore = this.$input_lore.val();
 	this.item.lore = (lore == "" ? [] : lore.split("\n"));
+	this.item.enchantments = this.enchantments;
 	this.item.updateDiv();
 }

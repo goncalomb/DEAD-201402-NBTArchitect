@@ -8,6 +8,7 @@ UtilsMc.js
 Mojangson.js
 
 Material.js
+Enchantment.js
 
 Workspace.js
 

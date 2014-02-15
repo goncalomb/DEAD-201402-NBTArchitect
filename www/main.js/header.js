@@ -25,6 +25,11 @@ var randomInt = function(min, max) {
 	return Math.floor(Math.random()*(max - min + 1) + min);
 }
 
+var parseIntRange = function(value, min, max) {
+	var i = parseInt(value);
+	return (isNaN(i) || i != value || i < min || i > max ? null : i);
+}
+
 var isDefined = function(value) {
 	return (typeof value !== "undefined");
 }
