@@ -128,7 +128,13 @@ Workspace.defaultObjects = function() {
 	obj = new MCItem(Material.BY_NAME["minecraft:fish"]);
 	obj.damage = 3;
 	obj.name = "§3Fishy Friend";
-	obj.lore = ["I smell something fishy."]
+	obj.lore = ["I smell something fishy."];
+	this.OBJECTS.push(obj);
+
+	obj = new MCItem(Material.BY_NAME["minecraft:diamond_sword"]);
+	obj.name = "§5HHH Headtaker";
+	obj.lore = ["Cursed by dark spirits similar to those", "that dwell within the Eyelander."];
+	obj.enchantments = [[16, 5], [21, 1]];
 	this.OBJECTS.push(obj);
 
 	obj = new MCItem(Material.BY_NAME["minecraft:dragon_egg"]);
