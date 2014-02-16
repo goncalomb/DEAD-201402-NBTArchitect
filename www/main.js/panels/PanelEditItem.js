@@ -102,7 +102,7 @@ PanelEditItem.updateEnchatmentList = function($div) {
 						tag: "i",
 						"class": "fa fa-minus"
 					}]
-				}, " " + Enchantment.LIST[id] + " " + lvl]
+				}, " " + ItemMeta.ENCHANTMENTS[id] + " " + lvl]
 			}]);
 		})(i);
 	}
@@ -138,8 +138,8 @@ PanelEditItem.initialize = function(){
 		tag: "select",
 		"class": "form-control",
 		creation: function() {
-			for (var key in Enchantment.LIST) {
-				$.newElement("option", { value: key }, this).text(Enchantment.LIST[key]);
+			for (var key in ItemMeta.ENCHANTMENTS) {
+				$.newElement("option", { value: key }, this).text(ItemMeta.ENCHANTMENTS[key]);
 			}
 			select_ench = $(this);
 		}
