@@ -127,18 +127,18 @@ Workspace.defaultObjects = function() {
 
 	obj = new MCItem(Material.BY_NAME["minecraft:fish"]);
 	obj.damage = 3;
-	obj.name = "§3Fishy Friend";
-	obj.lore = ["I smell something fishy."];
+	obj.meta.name = "§3Fishy Friend";
+	obj.meta.lore = ["I smell something fishy."];
 	this.OBJECTS.push(obj);
 
 	obj = new MCItem(Material.BY_NAME["minecraft:diamond_sword"]);
-	obj.name = "§5HHH Headtaker";
-	obj.lore = ["Cursed by dark spirits similar to those", "that dwell within the Eyelander."];
-	obj.enchantments = [[16, 5], [21, 1]];
+	obj.meta.name = "§5HHH Headtaker";
+	obj.meta.lore = ["Cursed by dark spirits similar to those", "that dwell within the Eyelander."];
+	obj.meta.enchantments = [[16, 5], [21, 1]];
 	this.OBJECTS.push(obj);
 
 	obj = new MCItem(Material.BY_NAME["minecraft:dragon_egg"]);
-	obj.name = "§0§k---§0 Dark Egg §k---";
+	obj.meta.name = "§0§k---§0 Dark Egg §k---";
 	this.OBJECTS.push(obj);
 
 	// Add the default objects without saving.

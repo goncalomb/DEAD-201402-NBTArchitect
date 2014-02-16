@@ -77,12 +77,13 @@ PanelEditItem.createInput = function(parent, type, placeholder) {
 	return $input;
 }
 
-PanelEditItem.updateEnchatmentList = function($div, list) {
+PanelEditItem.updateEnchatmentList = function($div) {
 	$div.empty();
-	for (var i = 0, l = list.length; i < l; ++i) {
+	var self = this;
+	for (var i = 0, l = self.meta.enchantments.length; i < l; ++i) {
 		(function(i) {
-			var id = list[i][0];
-			var lvl = list[i][1];
+			var id = self.meta.enchantments[i][0];
+			var lvl = self.meta.enchantments[i][1];
 			$.newDomChunk($div, [{
 				tag: "p",
 				childs: [{
@@ -92,7 +93,7 @@ PanelEditItem.updateEnchatmentList = function($div, list) {
 					"class": "btn btn-primary btn-xs",
 					creation: function() {
 						$(this).click(function() {
-							Enchantment.remove(list, id);
+							self.meta.removeEnchantment(id);
 							Workspace.setDirty(true);
 							$(this).parent().remove();
 						});
@@ -162,8 +163,8 @@ PanelEditItem.initialize = function(){
 					alert("Invalid level (1 - 32767).");
 					return;
 				}
-				Enchantment.add(self.enchantments, parseInt(select_ench.val()), lvl);
-				self.updateEnchatmentList(self.$div_ench, self.enchantments);
+				self.meta.addEnchantment(parseInt(select_ench.val()), lvl);
+				self.updateEnchatmentList(self.$div_ench);
 				Workspace.setDirty(true);
 			});
 		}
@@ -172,13 +173,15 @@ PanelEditItem.initialize = function(){
 
 PanelEditItem.open = function(item) {
 	if (Panel.prototype.open.call(this)) {
+		// Keep the instance of the item we are working, clone the damage and meta.
 		this.item = item;
+		this.damage = this.item.damage;
+		this.meta = item.meta.clone();
 
 		var material = item.material;
 		this.$div_icon.attr("class", "pull-right " + item.getIconClass());
 		this.$div_name.text(item.getTypeName());
 
-		this.damage = this.item.damage;
 		this.$div_variants.empty().parent().addClass("hidden");
 		if (material.variants.length > 0) {
 			for (var i = 0, l = material.variants.length; i < l; ++i) {
@@ -187,19 +190,19 @@ PanelEditItem.open = function(item) {
 			this.$div_variants.parent().removeClass("hidden");
 		}
 
-		this.$input_name.val(item.name);
-		this.$input_lore.val(item.lore.join("\n"));
-
-		this.enchantments = Enchantment.clone(item.enchantments);
-		this.updateEnchatmentList(this.$div_ench, this.enchantments);
+		this.$input_name.val(this.meta.name);
+		this.$input_lore.val(this.meta.lore.join("\n"));
+		this.updateEnchatmentList(this.$div_ench);
 	}
 }
 
 PanelEditItem.save = function() {
-	this.item.damage = this.damage;
-	this.item.name = this.$input_name.val();
+	// Store name and lore.
+	this.meta.name = this.$input_name.val();
 	var lore = this.$input_lore.val();
-	this.item.lore = (lore == "" ? [] : lore.split("\n"));
-	this.item.enchantments = this.enchantments;
+	this.meta.lore = (lore == "" ? [] : lore.split("\n"));
+	// Apply damage and meta.
+	this.item.damage = this.damage;
+	this.item.meta = this.meta;
 	this.item.updateDiv();
 }

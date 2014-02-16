@@ -2,9 +2,7 @@ var MCItem = function(material) {
 	MCObject.call(this);
 	this.material = material;
 	this.damage = 0;
-	this.name = null;
-	this.lore = [];
-	this.enchantments = [];
+	this.meta = new ItemMeta();
 	var self = this;
 	this.$div.click(function() {
 		PanelEditItem.open(self);
@@ -24,8 +22,8 @@ MCItem.prototype.getTypeName = function(data) {
 }
 
 MCItem.prototype.getName = function(data) {
-	if (!isEmpty(this.name)) {
-		return this.name;
+	if (!isEmpty(this.meta.name)) {
+		return this.meta.name;
 	}
 	return this.getTypeName();
 }
@@ -38,44 +36,16 @@ MCItem.prototype.encode = function(data) {
 	MCObject.prototype.encode.call(this, data);
 	data.i = this.material.id;
 	data.d = this.damage;
-	if (!isEmpty(this.name)) {
-		data.n = this.name;
-	}
-	if (!isEmpty(this.lore)) {
-		data.l = this.lore;
-	}
-	if (!isEmpty(this.enchantments)) {
-		data.e = this.enchantments;
-	}
+	data.m = {};
+	this.meta.encode(data.m);
 }
 
 MCItem.prototype.decode = function(data, version) {
 	this.material = Material.BY_ID[data.i];
 	this.damage = data.d;
-	if (isDefined(data.n)) {
-		this.name = data.n;
-	}
-	if (isDefined(data.l)) {
-		this.lore = data.l;
-	}
-	if (isDefined(data.e)) {
-		this.enchantments = data.e;
-	}
+	this.meta.decode(data.m);
 }
 
 MCItem.prototype.getCommand = function() {
-	var data = {};
-	if (!isEmpty(this.name) || !isEmpty(this.lore)) {
-		data.display = {};
-	}
-	if (!isEmpty(this.name)) {
-		data.display.Name = this.name;
-	}
-	if (!isEmpty(this.lore)) {
-		data.display.Lore = this.lore;
-	}
-	if (!isEmpty(this.enchantments)) {
-		data.ench = Enchantment.toNBT(this.enchantments);
-	}
-	return "/give " + Workspace.getOption("username", "@p") + " " + this.material.name + " 1 " + this.damage + " " + Mojangson.stringify(data);
+	return "/give " + Workspace.getOption("username", "@p") + " " + this.material.name + " 1 " + this.damage + " " + Mojangson.stringify(this.meta.toNBT());
 }

@@ -10,6 +10,8 @@ Mojangson.js
 Material.js
 Enchantment.js
 
+meta/ItemMeta.js
+
 Workspace.js
 
 Panel.js
