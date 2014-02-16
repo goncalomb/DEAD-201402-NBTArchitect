@@ -66,10 +66,10 @@ ItemMeta.prototype.toNBT = function(data) {
 	}
 	if (!isEmpty(this.enchantments)) {
 		data.ench = [];
-		for (var i = 0, l = list.length; i < l; ++i) {
+		for (var i = 0, l = this.enchantments.length; i < l; ++i) {
 			data.ench.push({
-				id: list[i][0],
-				lvl: list[i][1]
+				id: this.enchantments[i][0],
+				lvl: this.enchantments[i][1]
 			});
 		}
 	}
