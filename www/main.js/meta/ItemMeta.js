@@ -105,7 +105,8 @@ ItemMeta.prototype.clone = function(data) {
 	var data = {};
 	this.encode(data);
 	var clone = new this.constructor();
-	clone.decode(data);
+	// A very dirt clone.
+	clone.decode(JSON.parse(JSON.stringify(data)));
 	return clone;
 }
 
