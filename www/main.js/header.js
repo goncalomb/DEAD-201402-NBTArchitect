@@ -30,6 +30,11 @@ var parseIntRange = function(value, min, max) {
 	return (isNaN(i) || i != value || i < min || i > max ? null : i);
 }
 
+var parseFloatExact = function(value, min, max) {
+	var i = parseFloat(value);
+	return (isNaN(i) || i != value ? null : i);
+}
+
 var isDefined = function(value) {
 	return (typeof value !== "undefined");
 }

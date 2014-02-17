@@ -108,6 +108,39 @@ PanelEditItem.updateEnchatmentList = function($div) {
 	}
 }
 
+PanelEditItem.updateModifiersList = function($div) {
+	$div.empty();
+	var self = this;
+	for (var i = 0, l = self.meta.modifiers.length; i < l; ++i) {
+		(function(i) {
+			var attr = self.meta.modifiers[i][0];
+			var op = self.meta.modifiers[i][1];
+			var amount = self.meta.modifiers[i][2];
+			$.newDomChunk($div, [{
+				tag: "p",
+				childs: [{
+					tag: "button",
+					type: "button",
+					title: "Remove",
+					"class": "btn btn-primary btn-xs",
+					creation: function() {
+						$(this).click(function() {
+							self.meta.removeModifier(i);
+							Workspace.setDirty(true);
+							// We are removing by index so we need to update the list.
+							self.updateModifiersList($div);
+						});
+					},
+					childs: [{
+						tag: "i",
+						"class": "fa fa-minus"
+					}]
+				}, " " + ItemMeta.ATTRIBUTES[attr] + " " + amount + " (Op. " + op + ") "]
+			}]);
+		})(i);
+	}
+}
+
 PanelEditItem.initialize = function(){
 	this.$form = $("#panel-edit-item .form-horizontal");
 
@@ -169,6 +202,57 @@ PanelEditItem.initialize = function(){
 			});
 		}
 	}]);
+
+	var div_mod_outer = this.createRow(this.$form, "Modifiers");
+	div_mod_outer.addClass("form-inline");
+	var select_attr, select_op, input_mod_amount;
+	$.newDomChunk(div_mod_outer, [{
+		tag: "div",
+		creation: function() { self.$div_mod = $(this); }
+	}, {
+		tag: "select",
+		"class": "form-control",
+		creation: function() {
+			for (var key in ItemMeta.ATTRIBUTES) {
+				$.newElement("option", { value: key }, this).text(ItemMeta.ATTRIBUTES[key]);
+			}
+			select_attr = $(this);
+		}
+	}, " ", {
+		tag: "select",
+		"class": "form-control",
+		childs: [
+			{ tag: "option", value:"0", childs: ["Op. 0"] },
+			{ tag: "option", value:"1", childs: ["Op. 1"] },
+			{ tag: "option", value:"2", childs: ["Op. 2"] }
+		],
+		creation: function() { select_op = $(this); }
+	}, " ", {
+		tag: "input",
+		"class": "form-control",
+		"style": "width: 100px",
+		type: "text",
+		placeholder: "Amount",
+		creation: function() { input_mod_amount = $(this); }
+	}, " ", {
+		tag: "button",
+		"class": "btn btn-default",
+		type: "button",
+		childs: ["Add"],
+		creation: function() {
+			$(this).click(function() {
+				var amount = parseFloatExact(input_mod_amount.val());
+				if (amount === null) {
+					alert("Invalid amount.");
+					return;
+				}
+				self.meta.addModifier(select_attr.val(), parseInt(select_op.val()), amount);
+				self.updateModifiersList(self.$div_mod);
+				Workspace.setDirty(true);
+			});
+		}
+	}]);
+
 }
 
 PanelEditItem.open = function(item) {
@@ -193,6 +277,7 @@ PanelEditItem.open = function(item) {
 		this.$input_name.val(this.meta.name);
 		this.$input_lore.val(this.meta.lore.join("\n"));
 		this.updateEnchatmentList(this.$div_ench);
+		this.updateModifiersList(this.$div_mod);
 	}
 }
 
