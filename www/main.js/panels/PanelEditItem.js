@@ -169,7 +169,7 @@ PanelEditItem.initialize = function(){
 		creation: function() { self.$div_ench = $(this); }
 	}, {
 		tag: "select",
-		"class": "form-control",
+		"class": "form-control input-sm",
 		creation: function() {
 			for (var key in ItemMeta.ENCHANTMENTS) {
 				$.newElement("option", { value: key }, this).text(ItemMeta.ENCHANTMENTS[key]);
@@ -178,7 +178,7 @@ PanelEditItem.initialize = function(){
 		}
 	}, " ", {
 		tag: "input",
-		"class": "form-control",
+		"class": "form-control input-sm",
 		"style": "width: 80px",
 		type: "text",
 		placeholder: "Level",
@@ -186,9 +186,9 @@ PanelEditItem.initialize = function(){
 		creation: function() { input_ench_level = $(this); }
 	}, " ", {
 		tag: "button",
-		"class": "btn btn-default",
+		"class": "btn btn-primary btn-sm",
 		type: "button",
-		childs: ["Add"],
+		childs: [{tag: "i", "class": "fa fa-plus"}, " Add"],
 		creation: function() {
 			$(this).click(function() {
 				var lvl = parseIntRange(input_ench_level.val(), 1, 32767);
@@ -211,7 +211,7 @@ PanelEditItem.initialize = function(){
 		creation: function() { self.$div_mod = $(this); }
 	}, {
 		tag: "select",
-		"class": "form-control",
+		"class": "form-control input-sm",
 		creation: function() {
 			for (var key in ItemMeta.ATTRIBUTES) {
 				$.newElement("option", { value: key }, this).text(ItemMeta.ATTRIBUTES[key]);
@@ -220,7 +220,7 @@ PanelEditItem.initialize = function(){
 		}
 	}, " ", {
 		tag: "select",
-		"class": "form-control",
+		"class": "form-control input-sm",
 		childs: [
 			{ tag: "option", value:"0", childs: ["Op. 0"] },
 			{ tag: "option", value:"1", childs: ["Op. 1"] },
@@ -229,16 +229,16 @@ PanelEditItem.initialize = function(){
 		creation: function() { select_op = $(this); }
 	}, " ", {
 		tag: "input",
-		"class": "form-control",
-		"style": "width: 100px",
+		"class": "form-control input-sm",
+		"style": "width: 120px",
 		type: "text",
 		placeholder: "Amount",
 		creation: function() { input_mod_amount = $(this); }
 	}, " ", {
 		tag: "button",
-		"class": "btn btn-default",
+		"class": "btn btn-primary btn-sm",
 		type: "button",
-		childs: ["Add"],
+		childs: [{tag: "i", "class": "fa fa-plus"}, " Add"],
 		creation: function() {
 			$(this).click(function() {
 				var amount = parseFloatExact(input_mod_amount.val());
