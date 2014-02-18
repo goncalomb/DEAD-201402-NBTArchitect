@@ -31,8 +31,9 @@ if (typeof Storage === "undefined" || typeof JSON === "undefined") {
 		// Workspace.
 		Workspace.load();
 		$("#btn-save").click(function() {
-			Panel.currentPanel.save();
-			Workspace.save();
+			if (Panel.currentPanel.save() !== false) {
+				Workspace.save();
+			}
 		});
 		$(window).on("beforeunload", function() {
 			if (Workspace.isDirty) {

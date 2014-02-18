@@ -152,6 +152,10 @@ PanelEditItem.initialize = function(){
 	this.$div_variants = this.createRow(this.$form, "Variants");
 	this.$div_variants.addClass("btn-group btn-group-xs");
 
+	this.$input_durability = this.createInput(this.$form, "text", "Durability");
+	this.$input_durability.attr("maxlength", 5);
+	this.$input_durability.parent().addClass("input-group").attr("style", "width: 250px;");
+
 	this.$input_name = this.createInput(this.$form, "text", "Name");
 	this.$input_lore = this.createInput(this.$form, "textarea", "Lore");
 
@@ -266,8 +270,16 @@ PanelEditItem.open = function(item) {
 		this.$div_icon.attr("class", "pull-right " + item.getIconClass());
 		this.$div_name.text(item.getTypeName());
 
+		this.$input_durability.parent().parent().addClass("hidden");
 		this.$div_variants.empty().parent().addClass("hidden");
-		if (material.variants.length > 0) {
+		if (material.maxDurability > 0) {
+			// A item with durability, tool or piece of armor.
+			this.$input_durability.val(this.damage);
+			this.$input_durability.siblings().remove();
+			this.$input_durability.after($.newElement("span", "input-group-addon").text("Max. " + material.maxDurability));
+			this.$input_durability.parent().parent().removeClass("hidden");
+		} else if (material.variants.length > 0) {
+			// A block/item with more variants.
 			for (var i = 0, l = material.variants.length; i < l; ++i) {
 				this.createVariantButton(this.$div_variants, material, material.variants[i]);
 			}
@@ -286,6 +298,15 @@ PanelEditItem.save = function() {
 	this.meta.name = this.$input_name.val();
 	var lore = this.$input_lore.val();
 	this.meta.lore = (lore == "" ? [] : lore.split("\n"));
+	// Durability?
+	var dur = this.item.material.maxDurability;
+	if (dur > 0) {
+		this.damage = parseIntRange(this.$input_durability.val(), 0, dur);
+		if (this.damage === null) {
+			alert("Invalid durability (0 - " + dur + ").");
+			return false;
+		}
+	}
 	// Apply damage and meta.
 	this.item.damage = this.damage;
 	this.item.meta = this.meta;
