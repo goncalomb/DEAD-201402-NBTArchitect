@@ -29,7 +29,7 @@ PanelEditItem.createVariantButton = function(parent, material, damage) {
 		"style": "padding-top: 5px;",
 		childs: [{
 			tag: "div",
-			"class": "mc-icon-" + material.id + "-" + damage
+			"class": material.getIconClass(damage)
 		}],
 		creation: function() { $button = $(this); }
 	}]);
@@ -39,7 +39,7 @@ PanelEditItem.createVariantButton = function(parent, material, damage) {
 		$this.siblings().removeClass("active");
 		$this.addClass("active");
 		self.damage = damage;
-		self.$div_icon.attr("class", "pull-right object-icon mc-icon-" + material.id + "-" + damage);
+		self.$div_icon.attr("class", "pull-right object-icon " + material.getIconClass(damage));
 		Workspace.setDirty(true);
 	})
 	if (this.damage == damage) {

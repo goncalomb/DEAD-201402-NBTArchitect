@@ -29,7 +29,7 @@ MCItem.prototype.getName = function(data) {
 }
 
 MCObject.prototype.getIconClass = function(data) {
-	return "object-icon mc-icon-" + this.material.id + "-" + this.damage;
+	return "object-icon " + this.material.getIconClass(this.damage);
 }
 
 MCItem.prototype.encode = function(data) {

@@ -7,7 +7,7 @@ var Material = function(id, name, isBlock, variants) {
 		this.maxDurability = 0;
 	} else {
 		this.variants = [];
-		this.maxDurability = variants;
+		this.maxDurability = variants - 1;
 	}
 }
 
@@ -28,6 +28,14 @@ Material.add = function(id, name, isBlock, variants) {
 		"value": material.name,
 		"tokens": tokens
 	});
+}
+
+Material.prototype.getIconClass = function(damage) {
+	damage = damage || 0;
+	if (this.maxDurability != 0) {
+		damage = 0;
+	}
+	return "mc-icon-" + this.id + "-" + damage;
 }
 
 // Blocks.
