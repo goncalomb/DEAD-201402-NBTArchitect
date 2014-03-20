@@ -5,34 +5,37 @@
 	</condition>
 	<fail message="Ant 1.8.2+ is required." unless="ant.ok"/>
 
+	<!-- Change the version if needed. -->
+	<property name="version" value="0.0"/>
+
 	<property name="www.dir" location="www"/>
-	<property name="builder.dir" location="builder"/>
+	<property name="ant.dir" location="ant"/>
 	<property name="build.dir" location="build"/>
 	<property name="build.www.dir" location="${build.dir}/www"/>
 
 	<property file="project.properties"/>
 
-	<scriptdef name="gitdescribe" language="javascript" src="${builder.dir}/gitdescribe.js">
+	<scriptdef name="gitdescribe" language="javascript" src="${ant.dir}/gitdescribe.js">
 		<attribute name="property"/>
 		<attribute name="alternative"/>
 	</scriptdef>
-	<scriptdef name="jsmerge" language="javascript" src="${builder.dir}/jsmerge.js">
+	<scriptdef name="jsmerge" language="javascript" src="${ant.dir}/jsmerge.js">
 		<attribute name="dir"/>
 		<attribute name="destfile"/>
 	</scriptdef>
 
-	<taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask" classpath="${builder.dir}/compiler-20131014.jar"/>
+	<taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask" classpath="${ant.dir}/compiler-20131014.jar"/>
 
 	<target name="clean">
 		<delete dir="${build.dir}"/>
 	</target>
 
 	<target name="version" depends="clean">
-		<gitdescribe property="version" alternative="${version.alternative}"/>
+		<gitdescribe property="version.final" alternative="${version}"/>
 	</target>
 
 	<target name="build" depends="version">
-		<filter token="VERSION" value="${version}"/>
+		<filter token="VERSION" value="${version.final}"/>
 
 		<!-- Copy www directory. Don't filter .png and .ico files. -->
 		<copy todir="${build.www.dir}" filtering="true">
@@ -43,21 +46,21 @@
 		</copy>
 
 		<!-- Create main.js. -->
-		<jsmerge dir="${build.www.dir}/main.js" destfile="${build.dir}/main-${version}.js"/>
+		<jsmerge dir="${build.www.dir}/main.js" destfile="${build.dir}/main-${version.final}.js"/>
 		<delete dir="${build.www.dir}/main.js"/>
 
 		<!-- Minify main.js, creates main.min.js. -->
-		<jscomp compilationLevel="simple" warning="default" debug="false" output="${build.www.dir}/main-${version}.min.js">
+		<jscomp compilationLevel="simple" warning="default" debug="false" output="${build.www.dir}/main-${version.final}.min.js">
 			<sources dir="${build.dir}">
-				<file name="main-${version}.js"/>
+				<file name="main-${version.final}.js"/>
 			</sources>
 		</jscomp>
 
 		<!-- Versionize main.css. -->
-		<move file="${build.www.dir}/main.css" tofile="${build.www.dir}/main-${version}.css"/>
+		<move file="${build.www.dir}/main.css" tofile="${build.www.dir}/main-${version.final}.css"/>
 
 		<!-- Create artifact. -->
-		<zip destfile="${build.dir}/${ant.project.name}-${version}.zip">
+		<zip destfile="${build.dir}/${ant.project.name}-${version.final}.zip">
 			<zipfileset dir="${build.www.dir}" prefix="www"/>
 		</zip>
 	</target>
