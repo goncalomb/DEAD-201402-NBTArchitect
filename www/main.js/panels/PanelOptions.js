@@ -3,7 +3,7 @@ var PanelOptions = new Panel("options");
 PanelOptions.initialize = function() {
 	this.addButton($("#btn-options"));
 
-	$("#options-username").on("change keydown", function() {
+	$("#options-username, #options-f-char").on("change keydown", function() {
 		Workspace.setDirty(true);
 	});
 
@@ -25,10 +25,17 @@ PanelOptions.initialize = function() {
 
 PanelOptions.open = function() {
 	if (Panel.prototype.open.call(this)) {
+		$("#options-f-char").val(Workspace.getOption("char", "&"));
 		$("#options-username").val(Workspace.getOption("username", "@p"));
 	}
 }
 
 PanelOptions.save = function() {
+	var fChar = $("#options-f-char").val();
+	if (fChar.length != 1) {
+		alert("Invalid formating character.");
+		return false;
+	}
+	Workspace.setOption("char", fChar);
 	Workspace.setOption("username", $("#options-username").val());
 }

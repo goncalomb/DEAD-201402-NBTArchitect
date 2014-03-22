@@ -54,6 +54,13 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="options-f-char" class="control-label col-sm-2">Formatting Character</label>
+							<div class="col-sm-10">
+								<input id="options-f-char" class="form-control" type="text" maxlength="1" style="width: 75px"></input>
+								<span class="help-block">A single character that will replace § when creating the commands.</span>
+							</div>
+						</div>
+						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
 								<button id="btn-clear-workspace" type="button" class="btn btn-warning">Clear Workspace</button>
 								<button id="btn-reset-workspace" type="button" class="btn btn-warning">Reset Workspace</button>
@@ -118,6 +125,7 @@
 								<textarea id="command" class="form-control" readonly></textarea>
 							</div>
 						</div>
+						<p>Sadly, Minecraft does not allow pasting section signs (§) on command blocks, these are used to create various styles on text.</p>
 					</div>
 				</div>
 			</div>

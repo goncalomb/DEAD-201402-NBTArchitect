@@ -47,5 +47,5 @@ MCItem.prototype.decode = function(data, version) {
 }
 
 MCItem.prototype.getCommand = function() {
-	return "/give " + Workspace.getOption("username", "@p") + " " + this.material.name + " 1 " + this.damage + " " + Mojangson.stringify(this.meta.toNBT());
+	return "/give " + Workspace.getOption("username", "@p") + " " + this.material.name + " 1 " + this.damage + " " + Mojangson.stringify(this.meta.toNBT(), Workspace.getOption("char", "&"));
 }
