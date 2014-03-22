@@ -37,5 +37,10 @@ PanelOptions.save = function() {
 		return false;
 	}
 	Workspace.setOption("char", fChar);
-	Workspace.setOption("username", $("#options-username").val());
+	var username = $("#options-username").val();
+	if (username.length == 0 || username.indexOf(" ") != -1) {
+		alert("Invalid username.");
+		return false;
+	}
+	Workspace.setOption("username", username);
 }
